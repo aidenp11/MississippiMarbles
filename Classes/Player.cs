@@ -12,7 +12,7 @@ namespace MississippiMarbles.Classes
 	{ 
 		private String playerName;
 		private int points = 0;
-		private int[] savedDice = {};
+		private int[] savedDice = [];
 
 		public Player(String playerName) { this.playerName = playerName; }
 
@@ -28,6 +28,6 @@ namespace MississippiMarbles.Classes
 		 return values;
 		}
 		public void setPoints(int points) { this.points = points;}
-		public void addToPot(int diceValue) {savedDice.Append(diceValue);}
+		public void addToPot(int diceValue) {savedDice.SetValue(diceValue,0);}
 	}
 }

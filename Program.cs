@@ -4,6 +4,7 @@ Console.WriteLine("Please enter your name!");
 String name = Console.ReadLine();
 Player player = new Player(name);
 player.addToPot(4);
+String dice = player.getSavedDice();
 player.addToPot(3);
 player.addToPot(2);
 player.addToPot(5);
