@@ -14,11 +14,19 @@ namespace MississippiMarbles.Classes
 		private int points = 0;
 		private int[] savedDice = {};
 
-		Player(String playerName) { this.playerName = playerName; }
+		public Player(String playerName) { this.playerName = playerName; }
 
 		public String getPlayerName { get { return playerName;}}
 		public int getPoints { get { return points;}}
-		public int[] getSavedDice { get { return savedDice;} }
+		public String getSavedDice() 
+		{ 
+			String values = "";
+			foreach (var i in savedDice)
+			{
+				values = values + i.ToString();
+			}
+		 return values;
+		}
 		public void setPoints(int points) { this.points = points;}
 		public void addToPot(int diceValue) {savedDice.Append(diceValue);}
 	}
