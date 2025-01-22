@@ -12,11 +12,11 @@ namespace MississippiMarbles.Classes
 	{ 
 		private String playerName;
 		private int points = 0;
-		private int[] savedDice;
+		private int[] savedDice = {};
 
 		Player(String playerName) { this.playerName = playerName; }
 
-		public String getPlayerName { get { return playerName}}
+		public String getPlayerName { get { return playerName;}}
 		public int getPoints { get { return points;}}
 		public int[] getSavedDice { get { return savedDice;} }
 		public void setPoints(int points) { this.points = points;}
