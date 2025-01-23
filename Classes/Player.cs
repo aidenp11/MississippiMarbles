@@ -8,5 +8,6 @@ namespace MississippiMarbles.Classes
 {
 	internal class Player
 	{ 
+		public Player() { }
 	}
 }
