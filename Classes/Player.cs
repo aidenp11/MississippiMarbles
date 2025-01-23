@@ -10,17 +10,17 @@ namespace MississippiMarbles.Classes
 
 	internal class Player
 	{ 
-		private String playerName;
+		private string playerName;
 		private int points = 0;
-		private int[] savedDice = [];
+		private int[] savedDice = new int[6];
 
-		public Player(String playerName) { this.playerName = playerName; }
+		public Player(string playerName) { this.playerName = playerName; }
 
-		public String getPlayerName { get { return playerName;}}
+		public string getPlayerName { get { return playerName;}}
 		public int getPoints { get { return points;}}
-		public String getSavedDice() 
+		public string getSavedDice() 
 		{ 
-			String values = "";
+			string values = "";
 			foreach (var i in savedDice)
 			{
 				values = values + i.ToString();
@@ -28,6 +28,17 @@ namespace MississippiMarbles.Classes
 		 return values;
 		}
 		public void setPoints(int points) { this.points = points;}
-		public void addToPot(int diceValue) {savedDice.SetValue(diceValue,0);}
+		public void addToPot(int diceValue) 
+		{
+			for (int i = 0; i < savedDice.Length; i++)
+			{
+				if(savedDice[i] == 0)
+				{
+					savedDice[i] = diceValue;
+					break;
+				}
+			}
+
+		}
 	}
 }
