@@ -4,6 +4,7 @@ using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MississippiMarbles.Classes
@@ -38,12 +39,12 @@ namespace MississippiMarbles.Classes
 			}
 			return false;
 		}
-		private bool SmoothWater(int[] dice, int target, int index, int count) 
+		private bool MultipleValue(int[] dice, int target, int index, int count, int repNum) 
 		{
             // Base case: If we reach the end of the array, check if the count is exactly 3
             if (index >= dice.Length)
             {
-                return count >= 3;
+                return count >= repNum;
             }
             // Increment count if the current element matches the target number
             if (dice[index] == target)
@@ -51,58 +52,31 @@ namespace MississippiMarbles.Classes
                 count++;
             }
             // Recurse to the next index
-            return SmoothWater(dice, target, index + 1, count);
+            return MultipleValue(dice, target, index + 1, count, repNum);
         }
 
-		private int ThreeOnes(int[] selectedDice) 
-		{
-			if (SmoothWater(selectedDice, 1, 0, 0)) return pointsScored += 500;
-			return 0;
-		}
-        private int ThreeTwos(int[] selectedDice)
+        private int ScoreThreeOfAKind(int[] selectedDice, int targetNumber, int score)
         {
-            if (SmoothWater(selectedDice, 2, 0, 0)) return pointsScored += 200;
-            return 0;
-        }
-        private int ThreeThrees(int[] selectedDice)
-        {
-            if (SmoothWater(selectedDice, 3, 0, 0)) return pointsScored += 300;
-            return 0;
-        }
-        private int ThreeFours(int[] selectedDice)
-        {
-            if (SmoothWater(selectedDice, 4, 0, 0)) return pointsScored += 400;
-            return 0;
-        }
-        private int ThreeFives(int[] selectedDice)
-        {
-            if (SmoothWater(selectedDice, 5, 0, 0)) return pointsScored += 500;
-            return 0;
-        }
-        private int ThreeSixes(int[] selectedDice)
-        {
-            if (SmoothWater(selectedDice, 6, 0, 0)) return pointsScored += 600;
-            return 0;
-        }
-        private int RidinRapids(int[] dice) 
-        {
-            var counts = new Dictionary<int, int>();
-
-            foreach (int num in dice)
+            if (MultipleValue(selectedDice, targetNumber, 0, 0, 3))
             {
-                if (!counts.ContainsKey(num))
-                {
-                    counts[num] = 0;
-                }
-
-                counts[num]++;
-
-                if (counts[num] >= 4)
-                {
-                    return pointsScored += 1000;
-                }
+                return pointsScored += score;
             }
             return 0;
         }
+   
+        private int Straight(int[] selectedDice) 
+        {
+            // Define the straight sequence we are looking for
+            int[] straight = { 1, 2, 3, 4, 5, 6 };
+
+            // Get distinct numbers and sort them
+            int[] sortedUnique = selectedDice.Distinct().OrderBy(x => x).ToArray();
+
+            // Check if the straight sequence exists in the sorted unique numbers
+            if (straight.All(sortedUnique.Contains)) pointsScored += 2000;
+            
+            return 0;
+        }
+       
     }
 }
