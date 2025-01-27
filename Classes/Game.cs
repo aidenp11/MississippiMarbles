@@ -22,13 +22,17 @@ namespace MississippiMarbles.Classes
 			{
 				if (player.diceNum == 0)
 				{
-					if (player.getPoints == 0 && player.pointsToAdd < 700)
-					{
-						Console.WriteLine("You need 700 or more points to start!\n");
-						player.turn = false;
-						break;
-					}
-					else
+                    if (player.diceNum == 0)
+                    {
+                        player.setPoints(player.getPoints + player.pointsToAdd);
+                        Console.WriteLine("\n*** Turn Summary ***");
+                        Console.WriteLine("Player's total score for this turn: " + player.pointsToAdd);
+                        Console.WriteLine("Player's updated score: " + player.getPoints);
+                        Console.WriteLine("\n*** End of Turn ***\n");
+                        player.turn = false;
+                    }
+
+                    else
 					{
 						player.setPoints(player.getPoints + player.pointsToAdd);
 						Console.WriteLine("Player score is now " + player.getPoints + '\n');
@@ -37,12 +41,15 @@ namespace MississippiMarbles.Classes
 					}
 				}
 
+                Console.WriteLine("\n*** Dice Status ***");
                 Console.WriteLine(player.diceNum + " dice left\nTotal score to be added for this turn: " + player.pointsToAdd);
-                Console.Write("1) Roll\n2) End Turn\n");
-                Console.Write("Choice: ");
+                Console.WriteLine("\n*** Choose Your Action ***");
+                Console.WriteLine("1) Roll");
+                Console.WriteLine("2) End Turn");
+				Console.Write("Choice: ");
                 string input = Console.ReadLine();
 
-				try
+                try
 				{
 					int option = int.Parse(input);
 
