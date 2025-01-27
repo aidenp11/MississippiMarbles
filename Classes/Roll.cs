@@ -21,6 +21,7 @@ namespace MississippiMarbles.Classes
 		public enum Concepts
 		{
 			ONE,
+			FIVE,
 			STRAIGHT,
 			TOK1,
 			TOK2,
@@ -63,7 +64,8 @@ namespace MississippiMarbles.Classes
 				for (int i = 0; i < dice.Count; i++)
 				{
 					if (dice.ElementAt(i) == 1) possibilities.Add(Concepts.ONE);
-				}
+					if (dice.ElementAt(i) == 5) possibilities.Add(Concepts.FIVE);
+                }
 				if (MultipleValue(dice, 1, 0, 0, 3)) possibilities.Add(Concepts.TOK1);
 				if (MultipleValue(dice, 2, 0, 0, 3)) possibilities.Add(Concepts.TOK2);
 				if (MultipleValue(dice, 3, 0, 0, 3)) possibilities.Add(Concepts.TOK3);
@@ -96,7 +98,8 @@ namespace MississippiMarbles.Classes
 					for (int i = 0; i < possibilities.Count; i++)
 					{
 						if (possibilities.ElementAt(i) == Concepts.ONE) Console.WriteLine(i+1 + ") 1 one = 100 points");
-						else if (possibilities.ElementAt(i) == Concepts.TOK1) Console.WriteLine(i+1 + ") 3 ones = 500 points");
+                        else if (possibilities.ElementAt(i) == Concepts.FIVE) Console.WriteLine(i + 1 + ") 1 five = 50 points");
+                        else if (possibilities.ElementAt(i) == Concepts.TOK1) Console.WriteLine(i+1 + ") 3 ones = 500 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK2) Console.WriteLine(i+1 + ") 3 twos = 200 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK3) Console.WriteLine(i + 1 + ") 3 threes = 300 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK4) Console.WriteLine(i + 1 + ") 3 fours = 400 points");
@@ -124,7 +127,15 @@ namespace MississippiMarbles.Classes
 							{
 								player.diceNum -= 1;
 								player.pointsToAdd += 100;
-								Console.WriteLine("1 chosen\n");
+                                Console.WriteLine("1 chosen\n");
+								choosingDice = false;
+								return;
+							}
+							else if (possibilities.ElementAt(option - 1) == Concepts.FIVE)
+							{
+								player.diceNum -= 1;
+								player.pointsToAdd += 50;
+								Console.WriteLine("5 chosen\n");
 								choosingDice = false;
 								return;
 							}
@@ -212,11 +223,22 @@ namespace MississippiMarbles.Classes
 					{
 						Console.WriteLine("Input must be a number \n");
 					}
-				}
+                }
 			}
 		}
 
-		public void TryRoll(int diceNum)
+		public void DisplayDiceAgain()
+		{
+			for (int i = 0; i < dice.Count; i++)
+			{
+				if (i == 0) Console.WriteLine("Dice rolled: ");
+				Console.Write(dice.ElementAt(i) + " ");
+				if (i == dice.Count - 1) Console.WriteLine('\n');
+			}
+		}
+
+
+        public void TryRoll(int diceNum)
 		{
 			Random r = new Random();
 			int roll;
