@@ -10,12 +10,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace MississippiMarbles.Classes
 {
 	internal class Roll(int[] dice)
-    {
+	{
 		public int[] dice = dice;
 		public int[]? selectedDice;
 		public int pointsScored = 0;
 
-        private int CalculateScore()
+		private int CalculateScore()
 		{
 			return 0;
 		}
@@ -35,48 +35,48 @@ namespace MississippiMarbles.Classes
 			foreach (int value in dice)
 			{
 				if (value == 2) floodCount++;
-				if (floodCount >= 4) return true;
 			}
-			return false;
+			if (floodCount == 4) return true;
+			else return false;
 		}
-		private bool MultipleValue(int[] dice, int target, int index, int count, int repNum) 
+		private bool MultipleValue(int[] dice, int target, int index, int count, int repNum)
 		{
-            // Base case: If we reach the end of the array, check if the count is exactly 3
-            if (index >= dice.Length)
-            {
-                return count >= repNum;
-            }
-            // Increment count if the current element matches the target number
-            if (dice[index] == target)
-            {
-                count++;
-            }
-            // Recurse to the next index
-            return MultipleValue(dice, target, index + 1, count, repNum);
-        }
+			// Base case: If we reach the end of the array, check if the count is exactly 3
+			if (index >= dice.Length)
+			{
+				return count >= repNum;
+			}
+			// Increment count if the current element matches the target number
+			if (dice[index] == target)
+			{
+				count++;
+			}
+			// Recurse to the next index
+			return MultipleValue(dice, target, index + 1, count, repNum);
+		}
 
-        private int ScoreThreeOfAKind(int[] selectedDice, int targetNumber, int score)
-        {
-            if (MultipleValue(selectedDice, targetNumber, 0, 0, 3))
-            {
-                return pointsScored += score;
-            }
-            return 0;
-        }
-   
-        private int Straight(int[] selectedDice) 
-        {
-            // Define the straight sequence we are looking for
-            int[] straight = { 1, 2, 3, 4, 5, 6 };
+		private int ScoreThreeOfAKind(int[] selectedDice, int targetNumber, int score)
+		{
+			if (MultipleValue(selectedDice, targetNumber, 0, 0, 3))
+			{
+				return pointsScored += score;
+			}
+			return 0;
+		}
 
-            // Get distinct numbers and sort them
-            int[] sortedUnique = selectedDice.Distinct().OrderBy(x => x).ToArray();
+		private int Straight(int[] selectedDice)
+		{
+			// Define the straight sequence we are looking for
+			int[] straight = { 1, 2, 3, 4, 5, 6 };
 
-            // Check if the straight sequence exists in the sorted unique numbers
-            if (straight.All(sortedUnique.Contains)) pointsScored += 2000;
-            
-            return 0;
-        }
-       
-    }
+			// Get distinct numbers and sort them
+			int[] sortedUnique = selectedDice.Distinct().OrderBy(x => x).ToArray();
+
+			// Check if the straight sequence exists in the sorted unique numbers
+			if (straight.All(sortedUnique.Contains)) pointsScored += 2000;
+
+			return 0;
+		}
+
+	}
 }
