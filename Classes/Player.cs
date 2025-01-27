@@ -5,9 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MississippiMarbles.Classes
-{
+{ 
+	//Player Class { int points, string name, array saved_dice}
+
 	internal class Player
 	{ 
-		public Player() { }
+		private string playerName;
+		private int points = 0;
+		private int[] savedDice = new int[6];
+
+		public Player(string playerName) { this.playerName = playerName; }
+
+		public string getPlayerName { get { return playerName;}}
+		public int getPoints { get { return points;}}
+		public string getSavedDice() 
+		{ 
+			string values = "";
+			foreach (var i in savedDice)
+			{
+				values = values + i.ToString();
+			}
+		 return values;
+		}
+		public void setPoints(int points) { this.points = points;}
+		public void addToPot(int diceValue) 
+		{
+			for (int i = 0; i < savedDice.Length; i++)
+			{
+				if(savedDice[i] == 0)
+				{
+					savedDice[i] = diceValue;
+					break;
+				}
+			}
+
+		}
 	}
 }
