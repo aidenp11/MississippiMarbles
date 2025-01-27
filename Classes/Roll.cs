@@ -41,7 +41,7 @@ namespace MississippiMarbles.Classes
 			List<Concepts> possibilities = new List<Concepts>();
 			for (int i = 0; i < diceNum; i++)
 			{
-				roll = r.Next(1, 6);
+				roll = r.Next(1, 7);
 				dice.Add(roll);
 			}
 			for (int i = 0; i < dice.Count; i++)
@@ -130,9 +130,10 @@ namespace MississippiMarbles.Classes
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.STRAIGHT)
 							{
+								player.diceNum -= 6;
 								player.setPoints(2000);
 								Console.WriteLine("Straight chosen\n");
-								player.turn = false;
+								choosingDice = false;
 								return;
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK1)
@@ -201,9 +202,10 @@ namespace MississippiMarbles.Classes
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.SOK)
 							{
+								player.diceNum -= 6;
 								player.pointsToAdd += 6000;
 								Console.WriteLine("Six of a kind chosen\n");
-								player.turn = false;
+								choosingDice = false;
 								return;
 							}
 						}

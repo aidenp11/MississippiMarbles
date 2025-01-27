@@ -66,7 +66,7 @@ while (preGame)
 while (game)
 {
 	Game g = new Game(players, turn);
-	Console.WriteLine(players.ElementAt(g.winnerTurn) + " won the game!");
+	Console.WriteLine(players.ElementAt(g.winnerTurn).getPlayerName + " won the game!");
 	game = false;
 }
 

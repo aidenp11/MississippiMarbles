@@ -14,15 +14,26 @@ namespace MississippiMarbles.Classes
 			Player player = players.ElementAt(turn);
 			player.diceNum = 6;
 			player.turn = true;
+			player.pointsToAdd = 0;
 			Roll roll;
 			Console.WriteLine(player.getPlayerName + "'s turn\nScore: " + player.getPoints);
 			while (player.turn)
 			{
-				if (player.diceNum == 0)
+				if (player.diceNum <= 0)
 				{
-					player.setPoints(player.getPoints + player.pointsToAdd);
-					Console.WriteLine("Player score is now " + player.getPoints + '\n');
+					if (player.getPoints == 0 && player.pointsToAdd < 700)
+					{
+						Console.WriteLine("You need 700 or more points to start!\n");
+						player.turn = false;
+					}
+					else
+					{
+						player.setPoints(player.getPoints + player.pointsToAdd);
+						Console.WriteLine("Player score is now " + player.getPoints + '\n');
+						player.turn = false;
+					}
 					player.turn = false;
+					break;
 				}
 				Console.WriteLine(player.diceNum + " dice left\nTotal score to be added for this turn: " + player.pointsToAdd);
 				Console.Write("1) Roll\n2) End Turn\n");
