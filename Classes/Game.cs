@@ -8,5 +8,9 @@ namespace MississippiMarbles.Classes
 {
 	internal class Game
 	{
+		public Game(List<Player> players)
+		{
+
+		}
 	}
 }

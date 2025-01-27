@@ -17,7 +17,7 @@ namespace MississippiMarbles.Classes
 		public int[]? selectedDice;
 		public int pointsScored = 0;
 
-        private int CalculateScore()
+		private int CalculateScore()
 		{
             while (!DiceFlood(dice)) 
             {
@@ -130,11 +130,11 @@ namespace MississippiMarbles.Classes
 			foreach (int value in dice)
 			{
 				if (value == 2) floodCount++;
-				if (floodCount >= 4) return true;
 			}
-			return false;
+			if (floodCount == 4) return true;
+			else return false;
 		}
-		private bool MultipleValue(int[] dice, int target, int index, int count, int repNum) 
+		private bool MultipleValue(int[] dice, int target, int index, int count, int repNum)
 		{
             // Base case: If we reach the end of the array, check if the count is equal to or over repetitive num
             if (index >= dice.Length)
@@ -162,14 +162,14 @@ namespace MississippiMarbles.Classes
             // Define the straight sequence we are looking for
             int[] straight = { 1, 2, 3, 4, 5, 6 };
 
-            // Get distinct numbers and sort them
-            int[] sortedUnique = selectedDice.Distinct().OrderBy(x => x).ToArray();
+			// Get distinct numbers and sort them
+			int[] sortedUnique = selectedDice.Distinct().OrderBy(x => x).ToArray();
 
-            // Check if the straight sequence exists in the sorted unique numbers
-            if (straight.All(sortedUnique.Contains)) pointsScored += 2000;
-            
-            return 0;
-        }
-       
-    }
+			// Check if the straight sequence exists in the sorted unique numbers
+			if (straight.All(sortedUnique.Contains)) pointsScored += 2000;
+
+			return 0;
+		}
+
+	}
 }
