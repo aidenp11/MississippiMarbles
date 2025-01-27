@@ -37,10 +37,10 @@ namespace MississippiMarbles.Classes
 					}
 				}
 
-				Console.WriteLine(player.diceNum + " dice left\nTotal score to be added for this turn: " + player.pointsToAdd);
-				Console.Write("1) Roll\n2) End Turn\n");
-				Console.Write("Choice: ");
-				string input = Console.ReadLine();
+                Console.WriteLine(player.diceNum + " dice left\nTotal score to be added for this turn: " + player.pointsToAdd);
+                Console.Write("1) Roll\n2) End Turn\n");
+                Console.Write("Choice: ");
+                string input = Console.ReadLine();
 
 				try
 				{
@@ -59,27 +59,27 @@ namespace MississippiMarbles.Classes
 								roll.TryOpen(player.diceNum);  // Handle the roll of the dice
 								break;
 
-							case 2:
-								if (player.getPoints == 0 && player.pointsToAdd < 700)
-								{
-									Console.WriteLine("You need 700 or more points to start!\n");
-									player.turn = false;
-								}
-								else
-								{
-									player.setPoints(player.getPoints + player.pointsToAdd);
-									Console.WriteLine("Player score is now " + player.getPoints + '\n');
-									player.turn = false;
-								}
-								break;
-						}
-					}
-				}
-				catch (FormatException)
-				{
-					Console.WriteLine("Input must be 1 or 2\n");
-				}
-			}
+                            case 2:
+                                if (player.getPoints == 0 && player.pointsToAdd < 700)
+                                {
+                                    Console.WriteLine("You need 700 or more points to start!\n");
+                                    player.turn = false;
+                                }
+                                else
+                                {
+                                    player.setPoints(player.getPoints + player.pointsToAdd);
+                                    Console.WriteLine("Player score is now " + player.getPoints + '\n');
+                                    player.turn = false;
+                                }
+                                break;
+                        }
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Input must be 1 or 2\n");
+                }
+            }
 
 			if (player.getPoints >= 11000)
 			{
