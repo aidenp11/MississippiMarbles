@@ -12,7 +12,7 @@ namespace MississippiMarbles.Classes
 	{ 
 		private string playerName;
 		private int points = 0;
-		private List<Roll.Concepts> savedDice = new List<Roll.Concepts>();
+		public List<Roll.Concepts> savedDice = new List<Roll.Concepts>();
 
 		public int diceNum;
 		public bool turn;
