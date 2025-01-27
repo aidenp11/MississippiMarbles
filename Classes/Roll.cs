@@ -11,7 +11,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MississippiMarbles.Classes
 {
-	internal class Roll(Player playerTurn)
+	public class Roll(Player playerTurn)
 	{
 		Player player = playerTurn;
 		public int pointsToAdd;
@@ -469,7 +469,8 @@ namespace MississippiMarbles.Classes
 			if (floodCount == 4) return true;
 			else return false;
 		}
-		private bool MultipleValue(List<int> dice, int target, int index, int count, int repNum)
+
+		public bool MultipleValue(List<int> dice, int target, int index, int count, int repNum)
 		{
 			// Base case: If we reach the end of the array, check if the count is equal to or over repetitive num
 			if (index >= dice.Count)

@@ -8,7 +8,7 @@ namespace MississippiMarbles.Classes
 { 
 	//Player Class { int points, string name, array saved_dice}
 
-	internal class Player
+	public class Player
 	{ 
 		private string playerName;
 		private int points = 0;
