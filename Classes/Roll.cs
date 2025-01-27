@@ -129,7 +129,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 100;
                                 Console.WriteLine("1 chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FIVE)
 							{
@@ -137,14 +137,14 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 50;
 								Console.WriteLine("5 chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.STRAIGHT)
 							{
 								player.setPoints(2000);
 								Console.WriteLine("Straight chosen\n");
 								player.turn = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK1)
 							{
@@ -152,7 +152,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 500;
 								Console.WriteLine("3 ones chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK2)
 							{
@@ -160,7 +160,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 200;
 								Console.WriteLine("3 twos chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK3)
 							{
@@ -168,7 +168,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 300;
 								Console.WriteLine("3 threes chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK4)
 							{
@@ -176,7 +176,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 400;
 								Console.WriteLine("3 fours chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK5)
 							{
@@ -184,7 +184,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 500;
 								Console.WriteLine("3 fives chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK6)
 							{
@@ -192,7 +192,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 600;
 								Console.WriteLine("3 sixes chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FROK)
 							{
@@ -200,7 +200,7 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 1000;
 								Console.WriteLine("Four of a kind chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FVOK)
 							{
@@ -208,14 +208,14 @@ namespace MississippiMarbles.Classes
 								player.pointsToAdd += 3000;
 								Console.WriteLine("Five of a kind chosen\n");
 								choosingDice = false;
-								return;
+								
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.SOK)
 							{
 								player.pointsToAdd += 6000;
 								Console.WriteLine("Six of a kind chosen\n");
 								player.turn = false;
-								return;
+								
 							}
 						}
 					}
@@ -223,6 +223,27 @@ namespace MississippiMarbles.Classes
 					{
 						Console.WriteLine("Input must be a number \n");
 					}
+
+                    //allows the players to choose another dice to score if they have more than one possibility
+                    if (possibilities.Count != 0)
+                    {
+                        Console.WriteLine("Would you like to choose another dice to score?\n");
+                        Console.Write("1) Yes\n2) No\n");
+
+                        try
+                        {
+                            int choice = int.Parse(Console.ReadLine());
+                            if (choice == 2)
+                            {
+                                choosingDice = false;
+                            }
+                            else choosingDice = true;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Input must be a number \n");
+                        }
+                    }
                 }
 			}
 		}
