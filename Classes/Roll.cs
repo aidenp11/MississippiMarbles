@@ -305,27 +305,6 @@ namespace MississippiMarbles.Classes
 					{
 						Console.WriteLine("Input must be a number \n");
 					}
-
-					//allows the players to choose another dice to score if they have more than one possibility
-					//if (possibilities.Count != 0)
-					//{
-					//	Console.WriteLine("Would you like to choose another dice to score?\n");
-					//	Console.Write("1) Yes\n2) No\n");
-
-					//	try
-					//	{
-					//		int choice = int.Parse(Console.ReadLine());
-					//		if (choice == 2)
-					//		{
-					//			choosingDice = false;
-					//		}
-					//		else choosingDice = true;
-					//	}
-					//	catch
-					//	{
-					//		Console.WriteLine("Input must be a number \n");
-					//	}
-					//}
 				}
 			}
 		}
@@ -350,21 +329,6 @@ namespace MississippiMarbles.Classes
 				roll = r.Next(1, 6);
 				dice.Append(roll);
 			}
-		}
-
-		private int CalculateScore()
-		{
-			while (!DiceFlood(dice))
-			{
-				//To Open
-
-				SmoothWater();
-				RidinRapids();
-				Straight(selectedDice);
-				ScoreUnusedDice();
-			}
-
-			return 0;
 		}
 
 		public void SmoothWater()
@@ -400,65 +364,7 @@ namespace MississippiMarbles.Classes
 				}
 			}
 		}
-		private void ScoreUnusedDice()
-		{
-			if (selectedDice != null)
-			{
-				// Create a set of used dice based on scoring functions
-				HashSet<int> usedDice = new HashSet<int>();
-
-				// Include dice used in SmoothWater (Three of a Kind)
-				for (int target = 1; target <= 6; target++)
-				{
-					if (MultipleValue(selectedDice, target, 0, 0, 3))
-					{
-						usedDice.Add(target);
-					}
-				}
-
-				// Include dice used in RidinRapids (Four, Five, or Six of a Kind)
-				for (int target = 1; target <= 6; target++)
-				{
-					if (MultipleValue(selectedDice, target, 0, 0, 4) ||
-						MultipleValue(selectedDice, target, 0, 0, 5) ||
-						MultipleValue(selectedDice, target, 0, 0, 6))
-					{
-						usedDice.Add(target);
-					}
-				}
-
-				// Include dice used in Straight
-				int[] straight = { 1, 2, 3, 4, 5, 6 };
-				if (straight.All(selectedDice.Distinct().OrderBy(x => x).Contains))
-				{
-					foreach (int num in straight)
-					{
-						usedDice.Add(num);
-					}
-				}
-
-				// Calculate points for unused dice
-				foreach (int die in selectedDice)
-				{
-					if (!usedDice.Contains(die))
-					{
-						pointsScored += 100; // Award 100 points for each unused die
-						Console.WriteLine($"Unused die {die}: +100 points.");
-					}
-				}
-			}
-		}
-
-		private bool ToOpen()
-		{
-			/*A player rolls six dice and sets aside any scoring combinations totaling less than 700 points, 
-             * then re-rolls the remaining dice. If multiple scoring options are available, the player must set aside at least one but may keep more. 
-             * The player can continue rolling as long as they score. Once the total score reaches 700 or more, the player can either risk the entire score by continuing to roll or 
-             * pass their turn to lock in the score and officially "open." 
-             * After opening, the player does not need to qualify with 700 points in future turns. 
-             * If the player fails to reach 700 points and rolls a non-scoring combination, their turn ends, and they must wait until their next turn to try again.*/
-			return true;
-		}
+		
 		public bool DiceFlood(List<int> dice)
 		{
 			int floodCount = 0;
