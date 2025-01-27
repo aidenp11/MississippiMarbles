@@ -38,11 +38,12 @@ namespace MississippiMarbles.Classes
 		{
 			Random r = new Random();
 			int roll;
+			int choiceNum = 0;
 			bool choosingDice = true;
 			List<Concepts> possibilities = new List<Concepts>();
 			for (int i = 0; i < diceNum; i++)
 			{
-				roll = r.Next(1, 6);
+				roll = r.Next(1, 7);
 				dice.Add(roll);
 			}
 			for (int i = 0; i < dice.Count; i++)
@@ -60,47 +61,56 @@ namespace MississippiMarbles.Classes
 			}
 			else
 			{
-				if (Straight(dice)) possibilities.Add(Concepts.STRAIGHT);
-				for (int i = 0; i < dice.Count; i++)
-				{
-					if (dice.ElementAt(i) == 1) possibilities.Add(Concepts.ONE);
-					if (dice.ElementAt(i) == 5) possibilities.Add(Concepts.FIVE);
-                }
-				if (MultipleValue(dice, 1, 0, 0, 3)) possibilities.Add(Concepts.TOK1);
-				if (MultipleValue(dice, 2, 0, 0, 3)) possibilities.Add(Concepts.TOK2);
-				if (MultipleValue(dice, 3, 0, 0, 3)) possibilities.Add(Concepts.TOK3);
-				if (MultipleValue(dice, 4, 0, 0, 3)) possibilities.Add(Concepts.TOK4);
-				if (MultipleValue(dice, 5, 0, 0, 3)) possibilities.Add(Concepts.TOK5);
-				if (MultipleValue(dice, 6, 0, 0, 3)) possibilities.Add(Concepts.TOK6);
-				for (int i = 1; i <= 6; i++)
-				{
-					if (MultipleValue(dice, i, 0, 0, 4)) possibilities.Add(Concepts.FROK);
-				}
-				for (int i = 1; i <= 6; i++)
-				{
-					if (MultipleValue(dice, i, 0, 0, 5)) possibilities.Add(Concepts.FVOK);
-				}
-				for (int i = 1; i <= 6; i++)
-				{
-					if (MultipleValue(dice, i, 0, 0, 6)) possibilities.Add(Concepts.SOK);
-				}
-
-				if (possibilities.Count <= 0)
-				{
-					Console.WriteLine("No options, no points gained for this turn!\n");
-					player.pointsToAdd = 0;
-					player.turn = false;
-					return;
-				}
-
 				while (choosingDice)
 				{
+					if (choiceNum > 0) DisplayDiceAgain();
+					possibilities.Clear();
+					if (Straight(dice)) possibilities.Add(Concepts.STRAIGHT);
+					for (int i = 0; i < dice.Count; i++)
+					{
+						if (dice.ElementAt(i) == 1) possibilities.Add(Concepts.ONE);
+						if (dice.ElementAt(i) == 5) possibilities.Add(Concepts.FIVE);
+					}
+					if (MultipleValue(dice, 1, 0, 0, 3)) possibilities.Add(Concepts.TOK1);
+					if (MultipleValue(dice, 2, 0, 0, 3)) possibilities.Add(Concepts.TOK2);
+					if (MultipleValue(dice, 3, 0, 0, 3)) possibilities.Add(Concepts.TOK3);
+					if (MultipleValue(dice, 4, 0, 0, 3)) possibilities.Add(Concepts.TOK4);
+					if (MultipleValue(dice, 5, 0, 0, 3)) possibilities.Add(Concepts.TOK5);
+					if (MultipleValue(dice, 6, 0, 0, 3)) possibilities.Add(Concepts.TOK6);
+					for (int i = 1; i <= 6; i++)
+					{
+						if (MultipleValue(dice, i, 0, 0, 4)) possibilities.Add(Concepts.FROK);
+					}
+					for (int i = 1; i <= 6; i++)
+					{
+						if (MultipleValue(dice, i, 0, 0, 5)) possibilities.Add(Concepts.FVOK);
+					}
+					for (int i = 1; i <= 6; i++)
+					{
+						if (MultipleValue(dice, i, 0, 0, 6)) possibilities.Add(Concepts.SOK);
+					}
+
+					if (possibilities.Count <= 0 && choiceNum == 0)
+					{
+						Console.WriteLine("No options, no points gained for this turn!\n");
+						player.pointsToAdd = 0;
+						choosingDice = false;
+						player.turn = false;
+						return;
+					} else if (possibilities.Count <= 0)
+					{
+						Console.WriteLine("All choices chosen, turn over\n");
+						choosingDice = false;
+						return;
+					}
+
+
 					for (int i = 0; i < possibilities.Count; i++)
 					{
-						if (possibilities.ElementAt(i) == Concepts.ONE) Console.WriteLine(i+1 + ") 1 one = 100 points");
-                        else if (possibilities.ElementAt(i) == Concepts.FIVE) Console.WriteLine(i + 1 + ") 1 five = 50 points");
-                        else if (possibilities.ElementAt(i) == Concepts.TOK1) Console.WriteLine(i+1 + ") 3 ones = 500 points");
-						else if (possibilities.ElementAt(i) == Concepts.TOK2) Console.WriteLine(i+1 + ") 3 twos = 200 points");
+						if (possibilities.ElementAt(i) == Concepts.ONE) Console.WriteLine(i + 1 + ") 1 one = 100 points");
+						else if (possibilities.ElementAt(i) == Concepts.FIVE) Console.WriteLine(i + 1 + ") 1 five = 50 points");
+						else if (possibilities.ElementAt(i) == Concepts.TOK1) Console.WriteLine(i + 1 + ") 3 ones = 500 points");
+						else if (possibilities.ElementAt(i) == Concepts.TOK2) Console.WriteLine(i + 1 + ") 3 twos = 200 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK3) Console.WriteLine(i + 1 + ") 3 threes = 300 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK4) Console.WriteLine(i + 1 + ") 3 fours = 400 points");
 						else if (possibilities.ElementAt(i) == Concepts.TOK5) Console.WriteLine(i + 1 + ") 3 fives = 500 points");
@@ -109,6 +119,7 @@ namespace MississippiMarbles.Classes
 						else if (possibilities.ElementAt(i) == Concepts.FVOK) Console.WriteLine(i + 1 + ") Five of a kind = 3000 points");
 						else if (possibilities.ElementAt(i) == Concepts.SOK) Console.WriteLine(i + 1 + ") Six of a kind = 6000 points");
 						else if (possibilities.ElementAt(i) == Concepts.STRAIGHT) Console.WriteLine(i + 1 + ") Straight = 2000 points");
+						if (possibilities.Count - 1 == i) Console.WriteLine(i + 2 + ") End this roll");
 					}
 
 					Console.Write("Choice: ");
@@ -117,105 +128,176 @@ namespace MississippiMarbles.Classes
 					try
 					{
 						option = int.Parse(input);
-						if (option > possibilities.Count || option < 1)
+						if (option > possibilities.Count + 1 || option < 1)
 						{
 							Console.WriteLine("Input must be between 1 and " + possibilities.Count + "\n");
 						}
 						else
 						{
+							if (option == possibilities.Count + 1 && choiceNum > 0)
+							{
+								Console.WriteLine("Turn ended\n");
+								choosingDice = false;
+								return;
+							}
+							else if (option == possibilities.Count + 1)
+							{
+								Console.WriteLine("Turn ended without making choice, points lost!\n");
+								choosingDice = false;
+								player.pointsToAdd = 0;
+								player.turn = false;
+								return;
+							}
+
 							if (possibilities.ElementAt(option - 1) == Concepts.ONE)
 							{
 								player.diceNum -= 1;
 								player.pointsToAdd += 100;
-                                Console.WriteLine("1 chosen\n");
-								choosingDice = false;
-								
+								Console.WriteLine("1 chosen\n");
+								dice.Remove(1);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FIVE)
 							{
 								player.diceNum -= 1;
 								player.pointsToAdd += 50;
 								Console.WriteLine("5 chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(5);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.STRAIGHT)
 							{
+								player.diceNum -= 6;
 								player.setPoints(2000);
 								Console.WriteLine("Straight chosen\n");
-								player.turn = false;
-								
+								choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK1)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 500;
 								Console.WriteLine("3 ones chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(1);
+								dice.Remove(1);
+								dice.Remove(1);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK2)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 200;
 								Console.WriteLine("3 twos chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(2);
+								dice.Remove(2);
+								dice.Remove(2);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK3)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 300;
 								Console.WriteLine("3 threes chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(3);
+								dice.Remove(3);
+								dice.Remove(3);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK4)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 400;
 								Console.WriteLine("3 fours chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(4);
+								dice.Remove(4);
+								dice.Remove(4);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK5)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 500;
 								Console.WriteLine("3 fives chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(5);
+								dice.Remove(5);
+								dice.Remove(5);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.TOK6)
 							{
 								player.diceNum -= 3;
 								player.pointsToAdd += 600;
 								Console.WriteLine("3 sixes chosen\n");
-								choosingDice = false;
-								
+								dice.Remove(6);
+								dice.Remove(6);
+								dice.Remove(6);
+								dice.Remove(6);
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FROK)
 							{
 								player.diceNum -= 4;
 								player.pointsToAdd += 1000;
 								Console.WriteLine("Four of a kind chosen\n");
-								choosingDice = false;
-								
+								for (int i = 1; i < 7; i++)
+								{
+									if (MultipleValue(dice, i, 0, 0, 4))
+									{
+										dice.Remove(i);
+										dice.Remove(i);
+										dice.Remove(i);
+										dice.Remove(i);
+										break;
+									}
+								}
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.FVOK)
 							{
 								player.diceNum -= 5;
 								player.pointsToAdd += 3000;
 								Console.WriteLine("Five of a kind chosen\n");
-								choosingDice = false;
-								
+								for (int i = 1; i < 7; i++)
+								{
+									if (MultipleValue(dice, i, 0, 0, 5))
+									{
+										dice.Remove(i);
+										dice.Remove(i);
+										dice.Remove(i);
+										dice.Remove(i);
+										dice.Remove(i);
+										break;
+									}
+								}
+								choiceNum++;
+								//choosingDice = false;
+
 							}
 							else if (possibilities.ElementAt(option - 1) == Concepts.SOK)
 							{
+								player.diceNum -= 6;
 								player.pointsToAdd += 6000;
 								Console.WriteLine("Six of a kind chosen\n");
-								player.turn = false;
-								
+								choosingDice = false;
+
 							}
 						}
 					}
@@ -224,27 +306,27 @@ namespace MississippiMarbles.Classes
 						Console.WriteLine("Input must be a number \n");
 					}
 
-                    //allows the players to choose another dice to score if they have more than one possibility
-                    if (possibilities.Count != 0)
-                    {
-                        Console.WriteLine("Would you like to choose another dice to score?\n");
-                        Console.Write("1) Yes\n2) No\n");
+					//allows the players to choose another dice to score if they have more than one possibility
+					//if (possibilities.Count != 0)
+					//{
+					//	Console.WriteLine("Would you like to choose another dice to score?\n");
+					//	Console.Write("1) Yes\n2) No\n");
 
-                        try
-                        {
-                            int choice = int.Parse(Console.ReadLine());
-                            if (choice == 2)
-                            {
-                                choosingDice = false;
-                            }
-                            else choosingDice = true;
-                        }
-                        catch
-                        {
-                            Console.WriteLine("Input must be a number \n");
-                        }
-                    }
-                }
+					//	try
+					//	{
+					//		int choice = int.Parse(Console.ReadLine());
+					//		if (choice == 2)
+					//		{
+					//			choosingDice = false;
+					//		}
+					//		else choosingDice = true;
+					//	}
+					//	catch
+					//	{
+					//		Console.WriteLine("Input must be a number \n");
+					//	}
+					//}
+				}
 			}
 		}
 
@@ -259,7 +341,7 @@ namespace MississippiMarbles.Classes
 		}
 
 
-        public void TryRoll(int diceNum)
+		public void TryRoll(int diceNum)
 		{
 			Random r = new Random();
 			int roll;
@@ -402,6 +484,7 @@ namespace MississippiMarbles.Classes
 			// Recurse to the next index
 			return MultipleValue(dice, target, index + 1, count, repNum);
 		}
+
 		private int ScoreThreeOfAKind(List<int> selectedDice, int targetNumber, int score)
 		{
 			if (MultipleValue(selectedDice, targetNumber, 0, 0, 3))
