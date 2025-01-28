@@ -136,7 +136,7 @@ namespace MississippiMarbles.Classes
 						{
 							if (option == possibilities.Count + 1 && choiceNum > 0)
 							{
-								Console.WriteLine("Turn ended\n");
+								Console.WriteLine("Roll Ended\n");
 								choosingDice = false;
 								return;
 							}
