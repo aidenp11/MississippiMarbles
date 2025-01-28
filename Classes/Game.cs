@@ -22,6 +22,8 @@ namespace MississippiMarbles.Classes
 			{
 				if (player.diceNum == 0)
 				{
+					player.diceNum = 6;
+
                     if (player.diceNum == 0)
                     {
                         player.setPoints(player.getPoints + player.pointsToAdd);
@@ -29,7 +31,7 @@ namespace MississippiMarbles.Classes
                         Console.WriteLine("Player's total score for this turn: " + player.pointsToAdd);
                         Console.WriteLine("Player's updated score: " + player.getPoints);
                         Console.WriteLine("\n*** End of Turn ***\n");
-                        player.turn = false;
+                        player.turn = true;
                     }
 
                     else
